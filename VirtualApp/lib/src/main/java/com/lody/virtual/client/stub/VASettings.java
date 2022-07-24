@@ -1,5 +1,7 @@
 package com.lody.virtual.client.stub;
 
+import com.lody.virtual.client.VClientImpl;
+
 import java.util.Locale;
 
 /**
@@ -56,14 +58,20 @@ public class VASettings {
     }
 
     public static class Wifi {
-        public static boolean FAKE_WIFI_STATE = false;
+        public static boolean FAKE_WIFI_STATE = true;
         public static String DEFAULT_BSSID = "66:55:44:33:22:11";
         public static String DEFAULT_MAC = "11:22:33:44:55:66";
         public static String DEFAULT_SSID = "VirtualApp";
 
-        public static String BSSID = DEFAULT_BSSID;
-        public static String MAC = DEFAULT_MAC;
-        public static String SSID = DEFAULT_SSID;
+        // TODO: 2022/7/24 原采用VASetting的值，现改为跟用户的DeviceInfo
+//        public static String BSSID = DEFAULT_BSSID;
+//        public static String MAC = DEFAULT_MAC;
+//        public static String SSID = DEFAULT_SSID;
+
+        public static String BSSID = VClientImpl.get().getDeviceInfo().wifiBSSID;
+        public static String MAC = VClientImpl.get().getDeviceInfo().wifiMac;
+        public static String SSID = VClientImpl.get().getDeviceInfo().wifiSSID;
+        public static String IP = VClientImpl.get().getDeviceInfo().wifiIp;
     }
 
 }

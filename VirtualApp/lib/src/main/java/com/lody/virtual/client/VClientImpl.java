@@ -61,7 +61,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import me.weishu.exposed.ExposedBridge;
+import me.weishu.exposed.MyExposedBridge;
 import mirror.android.app.ActivityThread;
 import mirror.android.app.ActivityThreadNMR1;
 import mirror.android.app.ContextImpl;
@@ -334,10 +334,11 @@ public final class VClientImpl extends IVClient.Stub {
         if (enableXposed) {
             VLog.i(TAG, "Xposed is enabled.");
             ClassLoader originClassLoader = context.getClassLoader();
-            ExposedBridge.initOnce(context, data.appInfo, originClassLoader);
+            // 换成我的，做了一些修改，适配VA里的多开应用
+			MyExposedBridge.initOnce(context, data.appInfo, originClassLoader);
             List<InstalledAppInfo> modules = VirtualCore.get().getInstalledApps(0);
             for (InstalledAppInfo module : modules) {
-                ExposedBridge.loadModule(module.apkPath, module.getOdexFile().getParent(), module.libPath,
+                MyExposedBridge.loadModule(module.apkPath, module.getOdexFile().getParent(), module.libPath,
                         data.appInfo, originClassLoader);
             }
         } else {

@@ -36,6 +36,9 @@ public class VDeviceManagerService extends IDeviceInfoManager.Stub {
         List<String> deviceIds = new ArrayList<>();
         List<String> androidIds = new ArrayList<>();
         List<String> wifiMacs = new ArrayList<>();
+        List<String> wifiBSSIDs = new ArrayList<>();
+        List<String> wifiSSIDs = new ArrayList<>();
+        List<String> wifiIps = new ArrayList<>();
         List<String> bluetoothMacs = new ArrayList<>();
         List<String> iccIds = new ArrayList<>();
     }
@@ -52,6 +55,9 @@ public class VDeviceManagerService extends IDeviceInfoManager.Stub {
         mPool.deviceIds.add(info.deviceId);
         mPool.androidIds.add(info.androidId);
         mPool.wifiMacs.add(info.wifiMac);
+        mPool.wifiBSSIDs.add(info.wifiBSSID);
+        mPool.wifiSSIDs.add(info.wifiSSID);
+        mPool.wifiIps.add(info.wifiSSID);
         mPool.bluetoothMacs.add(info.bluetoothMac);
         mPool.iccIds.add(info.iccId);
     }
@@ -97,6 +103,18 @@ public class VDeviceManagerService extends IDeviceInfoManager.Stub {
         } while (mPool.wifiMacs.contains(value));
         do {
             value = generateMac();
+            info.wifiBSSID= value;
+        } while (mPool.wifiBSSIDs.contains(value));
+        do {
+            value = generateString(8);
+            info.wifiSSID = value;
+        } while (mPool.wifiSSIDs.contains(value));
+        do {
+            value = generateLocalIp();
+            info.wifiIp = value;
+        } while (mPool.wifiIps.contains(value));
+        do {
+            value = generateMac();
             info.bluetoothMac = value;
         } while (mPool.bluetoothMacs.contains(value));
 
@@ -105,7 +123,8 @@ public class VDeviceManagerService extends IDeviceInfoManager.Stub {
             info.iccId = value;
         } while (mPool.iccIds.contains(value));
 
-        info.serial = generateSerial();
+        //info.serial = generateSerial();
+        info.serial = "unknown";
 
         addDeviceInfoToPool(info);
         return info;
@@ -205,6 +224,31 @@ public class VDeviceManagerService extends IDeviceInfoManager.Stub {
         StringBuilder sb = new StringBuilder();
         for (Character c : list) {
             sb.append(c.charValue());
+        }
+        return sb.toString();
+    }
+
+    public static String generateString(int length) {
+        String serial;
+        serial = "ABCDEFGHIJKLMNOPQRSTUVWXYZ012345678910";
+        List<Character> list = new ArrayList<>();
+        for (char c : serial.toCharArray()) {
+            list.add(c);
+        }
+        Collections.shuffle(list);
+        StringBuilder sb = new StringBuilder();
+        for (Character c : list) {
+            sb.append(c.charValue());
+        }
+        return sb.substring(0, length);
+    }
+
+    public static String generateLocalIp() {
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder("192.168");
+        for (int i = 0; i < 2; i++) {
+            sb.append(".");
+            sb.append(random.nextInt(251)+3);// 3-254
         }
         return sb.toString();
     }

@@ -34,5 +34,14 @@ public class MyVirtualInitializer extends BaseVirtualInitializer {
 
         // Override
         virtualCore.setCrashHandler(new MyCrashHandler());
+
+		// 希望做Java Hook
+        // TODO: 2022/7/24 virtualCore.setAppCallback, set MyXposedJavaHook method
+        // failed： 没这块代码了
+
+        // 直接Xposed也不行
+
+        // 反射？
+
     }
 }

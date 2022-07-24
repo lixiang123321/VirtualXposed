@@ -34,6 +34,10 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
+// 没用，最后改名了
+//    packagingOptions{
+//        pickFirst "me/weishu/exposed/ExposedBridge.java"
+//    }
 }
 
 
@@ -43,6 +47,8 @@ dependencies {
         exclude group: 'me.weishu', module: 'free_reflection'
         exclude group: 'me.weishu', module: 'epic'
         exclude group: 'me.weishu.exposed', module: 'exposed-xposedapi'
+	// 没用，最后改名了
+        // exclude group: 'me.weishu.exposed', module: 'ExposedBridge.class'
     }
     implementation "me.weishu:free_reflection:3.0.1"
     implementation "me.weishu:epic:0.11.1"

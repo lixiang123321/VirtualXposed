@@ -16,8 +16,11 @@ public class VDeviceInfo implements Parcelable {
 
     public String deviceId;
     public String androidId;
-    public String wifiMac;
-    public String bluetoothMac;
+    public String wifiMac;// 形式为：00:00:00:00:00:00:00
+    public String wifiBSSID;// 形式为：00:00:00:00:00:00:00
+    public String wifiSSID;// 形式为：String, 任意
+    public String wifiIp;// 形式为：192.168.x.x, xfrom3-254
+    public String bluetoothMac;// 形式为：00:00:00:00:00:00:00
     public String iccId;
     public String serial;
     public String gmsAdId;
@@ -32,6 +35,9 @@ public class VDeviceInfo implements Parcelable {
         dest.writeString(this.deviceId);
         dest.writeString(this.androidId);
         dest.writeString(this.wifiMac);
+        dest.writeString(this.wifiBSSID);
+        dest.writeString(this.wifiSSID);
+        dest.writeString(this.wifiIp);
         dest.writeString(this.bluetoothMac);
         dest.writeString(this.iccId);
         dest.writeString(this.serial);
@@ -44,6 +50,9 @@ public class VDeviceInfo implements Parcelable {
         this.deviceId = in.readString();
         this.androidId = in.readString();
         this.wifiMac = in.readString();
+        this.wifiBSSID = in.readString();
+        this.wifiSSID = in.readString();
+        this.wifiIp = in.readString();
         this.bluetoothMac = in.readString();
         this.iccId = in.readString();
         this.serial = in.readString();
